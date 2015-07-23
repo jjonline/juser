@@ -3,7 +3,7 @@
 Plugin Name: 会员系统
 Version: 1.0
 Plugin URL:http://blog.jjonline.cn/theme/juser.html
-Description:加入QQ、微博开放平台登录功能的emlog会员系统，本会员系统与J2主题完全兼容，也会兼容后续本po出的其他主题。
+Description:**加入QQ、微博开放平台登录功能的emlog会员系统**，本会员系统与J2主题完全兼容，也会兼容后续本po出的其他主题(星号范围内为付费版功能)。
 Author: Jea杨
 Author Email: JJonline@JJonline.Cn
 Author URL: http://blog.jjonline.cn
