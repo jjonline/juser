@@ -33,6 +33,8 @@ function juser_static() {
 	echo '<link href="'.BLOG_URL.'content/plugins/juser/static/view.css" rel="stylesheet" type="text/css" />'."\r\n";
 	echo '<script src="'.BLOG_URL.'content/plugins/juser/static/Jlib.js" type="text/javascript"></script>'."\r\n";
 	echo '<script src="'.BLOG_URL.'content/plugins/juser/static/view.js" type="text/javascript"></script>'."\r\n";
+	// $obj = juser::getInstance();
+	// dump($obj->getDbInstance());
 }
 
 /**

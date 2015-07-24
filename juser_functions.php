@@ -6,6 +6,79 @@
  * @version $Id$
  */
 if(!defined('EMLOG_ROOT')) {exit('Juser 运行在emlog博客框架下!');}
+require 'juser_model.php';
+/**
+ * 会员系统核心操作类
+ * @param null
+ */
+class Juser {
+	const Juser_Version = '1.0';
+
+	private $_db;#数据库连接实例
+
+	private $_db_prefix = 'juser_data';#数据库表前缀
+
+	private static $_instance;#实例对象句柄
+
+	private $_sql;
+	
+	private function __construct() {}
+
+	/**
+	 * 实例化入口
+	 * @return object
+	 */
+	public static function getInstance() {
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
+ 	 * 获取Db实例
+ 	 * @param null
+ 	 */
+	public function getDbInstance() {
+		if(!is_null($this->_db)) {
+			return $this->_db;
+		}
+		if(class_exists('mysqli')) {
+			$this->_db = MySqlii::getInstance();
+		}else{
+			$this->_db = MySql::getInstance();
+		}
+		return $this->_db;
+	}
+
+	/**
+ 	 * 获取juser数据表
+ 	 * @param null
+ 	 */
+	public function getTable() {
+		return DB_PREFIX.$this->_db_prefix;
+	}
+
+	public static function checkJuser() {
+		$params = stream_context_create(array(
+				'http'=>array(
+						'method'  => 'GET',
+						'timeout' => 15
+						)
+				)
+		);
+		return file_get_contents('http://www.jjonline.cn/report.php?version='.self::Juser_Version.'&url='.BLOG_URL,false,$params);
+	}
+
+	/**
+ 	 * 显示登录界面->多种待选方式::覆层或页面，默认覆层
+ 	 * @param boolen $type = false
+ 	 */
+	public function showLogin($type = false) {
+
+	}
+}
+
 if(!function_exists('dump')) {
 /**
  * 浏览器友好的变量输出
