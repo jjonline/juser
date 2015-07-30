@@ -6,13 +6,21 @@
  * @version $Id$
  */
 if(!defined('EMLOG_ROOT')) {exit('Juser 运行在emlog博客框架下!');}
+session_start();#开启session
 require 'juser_model.php';
+#定义请求方法类型 便于控制器直接调用
+defined('REQUEST_METHOD') || define('REQUEST_METHOD',$_SERVER['REQUEST_METHOD']);
+defined('IS_GET')         || define('IS_GET',REQUEST_METHOD =='GET' ? true : false);
+defined('IS_POST')        || define('IS_POST',REQUEST_METHOD =='POST' ? true : false);
+defined('IS_AJAX')        || define('IS_AJAX',((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) ? true : false);
 /**
  * 会员系统核心操作类
  * @param null
  */
 class Juser {
-	const Juser_Version = '1.0';
+	const Juser_Version = 'Juser1.0';
+
+    private static $JuserModel = '';
 
 	private $_db;#数据库连接实例
 
@@ -59,6 +67,95 @@ class Juser {
 		return DB_PREFIX.$this->_db_prefix;
 	}
 
+    /**
+     * Juser用户是否登录
+     * @param null
+     * @return false OR UserInfo(boolean for True)
+     */
+    public static function isLogin() {
+        if(!isset($_COOKIE['JuserCookie'])) {
+            return false;
+        }
+        $Cookie = explode('|',$_COOKIE['JuserCookie']);
+        if (count($Cookie) != 3) {
+            return false;
+        }
+        list($juser_id,$expiration,$hmac) = $Cookie;
+        if (!empty($expiration) && $expiration < time()) {
+            return false;
+        }
+        #依据cookie中的明文加密后对比密文是否一致
+        $key      =  hash_hmac('md5',$juser_id.'|'.$expiration,AUTH_KEY);
+        $hash     =  hash_hmac('md5',$juser_id.'|'.$expiration,$key);
+        if($hmac != $hash) {
+            return false;
+        }
+        $UserInfo = $this->getUserInfoByID($juser_id);
+        if (!$UserInfo) {
+            return false;
+        }
+        return $UserInfo;
+    }
+    #通过id查找juser用户
+    public static function getUserInfoByID($juser_id) {
+        if(empty($juser_id) && !ctype_digit((string)$juser_id)) {return false;}
+        if(empty(self::$JuserModel)) {
+            self::$JuserModel   =   new JuserModel;
+        }
+        return self::$JuserModel->field(true)->where(array('id'=>$juser_id))->find();
+    }
+    #通过邮箱查找juser用户
+    public static function getUserInfoByMail($mail) {
+        if(empty($juser_id) && !Juser_is_mail($mail)) { return false; }
+        if(empty(self::$JuserModel)) {
+            self::$JuserModel   =   new JuserModel;
+        }
+        return self::$JuserModel->field(true)->where(array('mail'=>$mail))->find();
+    }
+
+    /**
+     * 对明文密码进行加密::与em内置明文密码加密方法一致 一个密码对应N个hash值，对比hash值即可知道密码是否一致
+     * @param string $password 明文密码
+     * @return hash string
+     */
+    public static function genPassword($password) {
+        $PHPASS   = new PasswordHash(8, true);
+        return $PHPASS->HashPassword($password);
+    }
+
+    /**
+     * 对比明文 密码与数据库中保存的hash字符串是否一致
+     * @param string $password 明文密码
+     * @param string $hash 数据库保存的hash值||password字段内容
+     * @return boolean
+     */
+    public static function checkPassword($password,$hash) {
+        global $em_hasher;
+        if(empty($em_hasher)) {
+            $em_hasher = new PasswordHash(8, true);
+        }
+        return $em_hasher->CheckPassword($password,$hash);
+    }
+    /**
+     * 给予登录状态的cookie
+     * @param int $juser_id
+     * @param boolean $is_expire cookie是否永久 默认1年
+     * @return boolean
+     */
+    public static function setAuthCookie($juser_id,$is_expire=true) {
+        if($is_expire){
+            $is_expire  = time() + 3600 * 24 * 30 * 12;
+        }else {
+            $is_expire  = null;
+        }
+        $key    =  hash_hmac('md5',$juser_id.'|'.$is_expire,AUTH_KEY);
+        $hash   =  hash_hmac('md5',$juser_id.'|'.$is_expire,$key);
+        $value  =  $juser_id.'|'.$is_expire.'|'.$hash;
+        // $_SESSION['Juser_ID']  =  $juser_id;
+        setcookie('JuserCookie',$value,$is_expire,'/');
+    }
+
+    #Juser效验
 	public static function checkJuser() {
 		$params = stream_context_create(array(
 				'http'=>array(
@@ -69,49 +166,29 @@ class Juser {
 		);
 		return file_get_contents('http://www.jjonline.cn/report.php?version='.self::Juser_Version.'&url='.BLOG_URL,false,$params);
 	}
-
-	/**
- 	 * 显示登录界面->多种待选方式::覆层或页面，默认覆层
- 	 * @param boolen $type = false
- 	 */
-	public function showLogin($type = false) {
-
-	}
 }
-
-if(!function_exists('dump')) {
-/**
- * 浏览器友好的变量输出
- * @param mixed $var 变量
- * @param boolean $echo 是否输出 默认为True 如果为false 则返回输出字符串
- * @param string $label 标签 默认为空
- * @param boolean $strict 是否严谨 默认为true
- * @return void|string
- */
-function dump($var, $echo=true, $label=null, $strict=true) {
-    $label = ($label === null) ? '' : rtrim($label) . ' ';
-    if (!$strict) {
-        if (ini_get('html_errors')) {
-            $output = print_r($var, true);
-            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
-        } else {
-            $output = $label . print_r($var, true);
-        }
-    } else {
-        ob_start();
-        var_dump($var);
-        $output = ob_get_clean();
-        if (!extension_loaded('xdebug')) {
-            $output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
-            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
-        }
+/*获取管理员、投稿作者的昵称和用户名--juser禁用这些昵称进行注册*/
+function Juser_get_admin_name() {
+    global $CACHE;
+    $user      = $CACHE->readCache('user');
+    $nickName  = array();
+    foreach ($user as $key => $value) {
+       if(!empty($value['name'])) {
+            $nickName[]  = $value['name'];
+       }       
     }
-    if ($echo) {
-        echo($output);
-        return null;
-    }else
-        return $output;
+    return $nickName;
 }
+function Juser_get_admin_mail() {
+    global $CACHE;
+    $user      = $CACHE->readCache('user');
+    $mail      = array();
+    foreach ($user as $key => $value) {
+       if(!empty($value['mail'])) {
+            $mail[]  = $value['mail'];
+       }       
+    }
+    return $mail;
 }
 /**
  * 判断参数字符串是否为密码格式（必须包含数字、字母的6至18位密码串）
@@ -147,6 +224,9 @@ function Juser_is_uid($uid) {
     //is_numeric ctype_digit的参数必须是字符串格式的数字才会返回true
     //不用正则的判断方法 return strlen($uid)>=4 && strlen($uid)<=11 && ctype_digit((string)$uid); 
     return preg_match('/^[1-9]\d{3,10}$/',$uid)===1;
+}
+function Juser_is_url($url) {
+    return !!preg_match('/^http[s]?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*\'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/\?)|(\/[0-9a-zA-Z_!~\*\'\(\)\.;\?:@&=\+\$,%#-\/]*)?)$/i',$url);
 }
 /**
  * 判断参数字符串是否为天朝身份证号

@@ -21,23 +21,25 @@ function callback_init() {
 	$add 		  = $Juser->getDbInstance()->getMysqlVersion()>'4.1'?"ENGINE=$type DEFAULT CHARSET=$dbcharset;":"TYPE=$type;";
 	$sql 		  = "
 					CREATE TABLE IF NOT EXISTS `{$tableName}` (
-						  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-						  `time` int(11) unsigned DEFAULT NULL,
-						  `name` char(64) DEFAULT '路人乙',
-						  `email` varchar(256) NOT NULL,
-						  `password` char(32) NOT NULL,
-						  `salt` char(32) DEFAULT NULL,
-						  `sex` enum('f','m') NOT NULL DEFAULT 'f',
-						  `qq_openid` char(64) DEFAULT NULL,
-						  `qq_token` char(64) DEFAULT NULL,
-						  `qq_figue` varchar(256) DEFAULT NULL,
-						  `sina_openid` char(64) DEFAULT NULL,
-						  `sina_token` char(64) DEFAULT NULL,
-						  `sina_figure` varchar(256) DEFAULT NULL,
-						  PRIMARY KEY (`id`),
-						  UNIQUE KEY `email` (`email`),
-						  KEY `qq_openid` (`qq_openid`),
-  						  KEY `sina_openid` (`sina_openid`)
+						`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+						`time` bigint(20) unsigned DEFAULT NULL,
+						`name` char(20) DEFAULT '路人乙',
+						`mail` char(128) NOT NULL,
+						`url` char(128) DEFAULT NULL,
+						`password` char(64) NOT NULL,
+						`sex` enum('f','m') NOT NULL DEFAULT 'f',
+						`qq_name` char(20) DEFAULT NULL,
+						`qq_openid` char(64) DEFAULT NULL,
+						`qq_token` char(32) DEFAULT NULL,
+						`qq_figue` char(128) DEFAULT NULL,
+						`sina_name` char(20) DEFAULT NULL,
+						`sina_openid` bigint(20) unsigned DEFAULT NULL,
+						`sina_token` char(32) DEFAULT NULL,
+						`sina_figure` char(128) DEFAULT NULL,
+						PRIMARY KEY (`id`),
+						UNIQUE KEY `email` (`mail`),
+						KEY `qq_openid` (`qq_openid`),
+						KEY `sina_openid` (`sina_openid`)
 					)".$add;
 	$Juser->getDbInstance()->query($sql);
 	#标记已安装
@@ -52,4 +54,4 @@ function callback_init() {
  * @param null
  * @return mixed
  */
-function callback_rm() {return;}
+function callback_rm() {}

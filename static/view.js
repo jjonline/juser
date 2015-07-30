@@ -14,7 +14,7 @@ $(function () {
 		if(J.GetUrlQueryString('plugin') == 'juser') {
 			menu = '<li class="sidebarsubmenu sidebarsubmenu1" id="menu_juser">'+juserSidebarNode.html()+'</li>';
 		}
-		insertNode.after(menu);
 		juserSidebarNode.hide().remove();
+		insertNode.after(menu);
 	}	
 });
