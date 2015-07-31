@@ -27,7 +27,7 @@ class JuserQq extends JuserOpen{
 			'redirect_uri'		=> $this->Callback,
 		);
 		$result = $this->Http($this->GetAccessTokenURL,$params,'POST',array(),true);
-		parse_str($result, $data);
+		parse_str($result,$data);
 		if(isset($data['access_token']) && isset($data['expires_in'])){
 			$this->AccessToken  = $data['access_token'];
 			return $this->AccessToken;
@@ -51,16 +51,17 @@ class JuserQq extends JuserOpen{
 			'oauth_consumer_key'=> $this->AppKey,
 			'openid'			=> $this->OpenID,
 		);
-		$data = json_decode($this->Http($this->GetAccessTokenURL,$params,'GET',array(),true),true);
-		if(!isset($data['ret']) && $data['ret']=='0') {
+		$data = json_decode($this->Http($this->GetUserInfoURL,$params,'GET',array(),true),true);
+		if(isset($data['ret']) && $data['ret']==0) {
 			$UserInfo 					=  array();
+			$UserInfo['type']			=  'qq';#type类型
+			$UserInfo['_pk']			=  $this->OpenID;#用于查询该开放平台用户是否存在 写入时务必要unset
+			$UserInfo['typeName']		=  '腾讯QQ';#用于前台提示用户用xx登录成功 或用xx绑定
 			$UserInfo['qq_name'] 		=  $data['nickname'];
 			$UserInfo['qq_openid'] 		=  $this->OpenID;
 			$UserInfo['qq_token']     	=  $this->AccessToken;
 			$UserInfo['qq_figure']    	=  $data['figureurl_qq_1'];
-			if($data['gender']!='n') {
-				$UserInfo['sex']		=  $data['gender'];#微博平台返回的性别不是未知 一切返回
-			}
+			$UserInfo['sex']			=  $data['gender']=='男'?'m':'f';			
 			return $UserInfo;
 		}
 		return false;

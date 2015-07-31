@@ -24,7 +24,7 @@ class JuserSina extends JuserOpen{
 			'code'				=> empty($code)?$this->Code:$code,
 			'redirect_uri'		=> $this->Callback,
 		);
-		$data = json_decode($this->Http($this->GetAccessTokenURL,$params,'POST',array(),true),true);
+		$data = json_decode($this->Http($this->GetAccessTokenURL,$params,'POST'),true);
 		if(isset($data['uid']) && isset($data['access_token'])) {
 			$this->OpenID 		=  $data['uid'];
 			$this->AccessToken  =  $data['access_token'];
@@ -43,9 +43,12 @@ class JuserSina extends JuserOpen{
 			'access_token'		=> $accessToken?$accessToken:$this->AccessToken,
 			'uid' 				=> $this->OpenID,
 		);
-		$data = json_decode($this->Http($this->GetAccessTokenURL,$params,'GET',array(),true),true);
+		$data = json_decode($this->Http($this->GetUserInfoURL,$params,'GET',array(),true),true);
 		if(!isset($data['error_code'])) {
 			$UserInfo 					=  array();
+			$UserInfo['type']			=  'sina';#type 类型
+			$UserInfo['_pk']			=  $this->OpenID;#用于查询该开放平台用户是否存在 写入时务必要unset
+			$UserInfo['typeName']		=  '新浪微薄';#用于前台提示用户用xx登录成功 或用xx绑定
 			$UserInfo['sina_name'] 		=  $data['screen_name'];
 			$UserInfo['sina_openid'] 	=  $this->OpenID;
 			$UserInfo['sina_token']     =  $this->AccessToken;

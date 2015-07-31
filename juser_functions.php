@@ -43,6 +43,17 @@ class Juser {
 		return self::$_instance;
 	}
 
+    /**
+     * 获取JuserModel实例
+     * @param null
+     */
+    public static function getJuserModel() {
+        if(empty(self::$JuserModel)) {
+            self::$JuserModel   =   new JuserModel();
+        }
+        return self::$JuserModel;
+    }
+
 	/**
  	 * 获取Db实例
  	 * @param null
@@ -90,7 +101,7 @@ class Juser {
         if($hmac != $hash) {
             return false;
         }
-        $UserInfo = $this->getUserInfoByID($juser_id);
+        $UserInfo = self::getUserInfoByID($juser_id);
         if (!$UserInfo) {
             return false;
         }
@@ -98,21 +109,29 @@ class Juser {
     }
     #通过id查找juser用户
     public static function getUserInfoByID($juser_id) {
-        if(empty($juser_id) && !ctype_digit((string)$juser_id)) {return false;}
+        if(empty($juser_id) || !ctype_digit((string)$juser_id)) { return false; }
         if(empty(self::$JuserModel)) {
-            self::$JuserModel   =   new JuserModel;
+            self::$JuserModel   =   new JuserModel();
         }
         return self::$JuserModel->field(true)->where(array('id'=>$juser_id))->find();
     }
     #通过邮箱查找juser用户
     public static function getUserInfoByMail($mail) {
-        if(empty($juser_id) && !Juser_is_mail($mail)) { return false; }
+        if(empty($juser_id) || !Juser_is_mail($mail)) { return false; }
         if(empty(self::$JuserModel)) {
-            self::$JuserModel   =   new JuserModel;
+            self::$JuserModel   =   new JuserModel();
         }
         return self::$JuserModel->field(true)->where(array('mail'=>$mail))->find();
     }
-
+    #通过开放平台openid查找用户
+    public static function getUserInfoByOpenID($type,$openid) {
+        if(empty($type) || empty($openid)) { return false; }
+        $key    = strtolower($type).'_openid';
+        if(empty(self::$JuserModel)) {
+            self::$JuserModel   =   new JuserModel();
+        }
+        return self::$JuserModel->field(true)->where(array($key=>$openid))->find();
+    }
     /**
      * 对明文密码进行加密::与em内置明文密码加密方法一致 一个密码对应N个hash值，对比hash值即可知道密码是否一致
      * @param string $password 明文密码
@@ -136,11 +155,22 @@ class Juser {
         }
         return $em_hasher->CheckPassword($password,$hash);
     }
+
+    /**
+     * 退出登录
+     * @param null
+     * @return void
+     */
+    public static function setAuthOut() {
+        $expire    =  time()-3600 * 24 * 30 * 12;
+        setcookie('JuserCookie','deleted',$expire,'/');
+    }
+
     /**
      * 给予登录状态的cookie
      * @param int $juser_id
      * @param boolean $is_expire cookie是否永久 默认1年
-     * @return boolean
+     * @return void
      */
     public static function setAuthCookie($juser_id,$is_expire=true) {
         if($is_expire){
@@ -205,7 +235,7 @@ function Juser_is_password($password) {
  * @return boolean
  */
 function Juser_is_mail($mail) {
-    return preg_match('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/',$mail)===1;
+    return preg_match('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/',$mail)===1 && strlen($mail)<128;
 }
 /**
  * 判断参数字符串是否为天朝手机号

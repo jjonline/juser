@@ -31,7 +31,7 @@ function callback_init() {
 						`qq_name` char(20) DEFAULT NULL,
 						`qq_openid` char(64) DEFAULT NULL,
 						`qq_token` char(32) DEFAULT NULL,
-						`qq_figue` char(128) DEFAULT NULL,
+						`qq_figure` char(128) DEFAULT NULL,
 						`sina_name` char(20) DEFAULT NULL,
 						`sina_openid` bigint(20) unsigned DEFAULT NULL,
 						`sina_token` char(32) DEFAULT NULL,
