@@ -42,6 +42,11 @@ function callback_init() {
 						KEY `sina_openid` (`sina_openid`)
 					)".$add;
 	$Juser->getDbInstance()->query($sql);
+	#检查并建立配置文件缓存 type=>['key'=>,'secret']
+	global $CACHE;
+	if(!is_file(EMLOG_ROOT.'/content/cache/jususr_config.php')) {
+		$CACHE->cacheWrite(serialize(array(0=>array('key'=>'http://blog.jjonline.cn','secret'=>time()))),'jususr_config');
+	}
 	#标记已安装
 	if(!is_file($plugin_dir.'/install.lock')) {
 		$Juser::checkJuser();

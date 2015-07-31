@@ -93,17 +93,16 @@ class JuserController {
 	}
 	#open登录初始化
 	private function openInit() {
-		#读取相关appkey等配置信息 检测开放平台类是否存在 实例化相关类
-
-
-		//code...
-
-
-		if(isset($_GET['type']) && strtolower($_GET['type'])=='qq') {
-			$Open  =  JuserOpen::getInstance('qq','200730','194bccdb27a20ee1a6831eec141d81c2',BLOG_URL.'?plugin=juser&a=openCallBack&type=qq');
-		}else {
-			$Open  =  JuserOpen::getInstance('sina','4025051940','ee3278d08ec58d98e85de5024734e660',BLOG_URL.'?plugin=juser&a=openCallBack&type=sina');
-		}
+		if(!isset($_GET['type'])) {emDirect(BLOG_URL.'?plugin=juser');}
+		$OpenType 	 = 	 strtolower($_GET['type']);
+		#appkey appsecret配置
+		global $CACHE;
+		$Config    	 =  $CACHE->readCache('jususr_config');
+		if(!isset($Config[$OpenType])) {exit('AppKey、AppSecret不存在，请先配置插件');}
+		$Config 	 =	$Config[$OpenType];
+		$Key  		 =  $Config['key'];
+		$Secret      = 	$Config['secret'];
+		$Open  		 =  JuserOpen::getInstance($OpenType,$Key,$Secret,BLOG_URL.'?plugin=juser&a=openCallBack&type='.$OpenType);
 		return $Open;
 	}
 	#open回调并获取用户信息成功后的调度
