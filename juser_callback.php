@@ -36,16 +36,20 @@ function callback_init() {
 						`sina_openid` bigint(20) unsigned DEFAULT NULL,
 						`sina_token` char(32) DEFAULT NULL,
 						`sina_figure` char(128) DEFAULT NULL,
+						`is_active` enum('y','n') NOT NULL DEFAULT 'n',
 						PRIMARY KEY (`id`),
 						UNIQUE KEY `email` (`mail`),
 						KEY `qq_openid` (`qq_openid`),
 						KEY `sina_openid` (`sina_openid`)
 					)".$add;
 	$Juser->getDbInstance()->query($sql);
+	#为评论表建立mail字段的索引
+	$alterSql  = "ALTER TABLE `".DB_PREFIX."comment` ADD INDEX mail(mail)";
+	$Juser->getDbInstance()->query($alterSql,true);
 	#检查并建立配置文件缓存 type=>['key'=>,'secret']
 	global $CACHE;
-	if(!is_file(EMLOG_ROOT.'/content/cache/jususr_config.php')) {
-		$CACHE->cacheWrite(serialize(array(0=>array('key'=>'http://blog.jjonline.cn','secret'=>time()))),'jususr_config');
+	if(!is_file(EMLOG_ROOT.'/content/cache/juser_config.php')) {
+		$CACHE->cacheWrite(serialize(array(0=>array('key'=>'http://blog.jjonline.cn','secret'=>time()))),'juser_config');
 	}
 	#标记已安装
 	if(!is_file($plugin_dir.'/install.lock')) {
@@ -59,4 +63,9 @@ function callback_init() {
  * @param null
  * @return mixed
  */
-function callback_rm() {}
+function callback_rm() {
+	$Juser 		    = Juser::getInstance();
+	#禁用插件 删除评论表mail字段的索引
+	$dropIndexSQl   =  'DROP INDEX mail ON `'.DB_PREFIX.'comment`';
+	$Juser->getDbInstance()->query($dropIndexSQl,true);
+}

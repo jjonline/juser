@@ -130,6 +130,11 @@ class Juser {
         if(empty(self::$JuserModel)) {
             self::$JuserModel   =   new JuserModel();
         }
+        #检查字段是否存在
+        $Fields = self::$JuserModel->getDbFields();
+        if(!in_array($key,$Fields)) {
+            throw new Exception('不存在的开放平台字段，请添加juser_data表字段');
+        }
         return self::$JuserModel->field(true)->where(array($key=>$openid))->find();
     }
     /**
@@ -219,6 +224,18 @@ function Juser_get_admin_mail() {
        }       
     }
     return $mail;
+}
+/**
+ * 获取随机字符串
+ * @param $len 需要的字符串长度
+ * @return boolean
+ */
+function Juser_randString($len=8) {
+    #去掉了容易混淆的字符oOLl和数字01
+    $chars   =   'ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    $chars   =   str_shuffle($chars);
+    $str     =   substr($chars,0,$len);
+    return $str;
 }
 /**
  * 判断参数字符串是否为密码格式（必须包含数字、字母的6至18位密码串）

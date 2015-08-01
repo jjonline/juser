@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/*
+ *
+ *Plugin Name: Juser
+ *URL: http://blog.jjonline.cn
+ *Description: 晶晶的博客emlog会员插件
+ *Author: Jea杨
+ *Version: 1.0
+ *
+ */
+.container {box-sizing:border-box;/*包裹布局容器::width;margin等插件不整*/}
+.juser_container {background:#fff;  box-sizing: border-box;}
+.pull {background:#fff;}
+/*login register etc*/
+.JnoAuth {padding:0;}
+.JnoAuth .pull {}
+.JnoAuth .pull-left {width:50%;float:left;background:#fff;position:relative;z-index:8;}
+.JnoAuth .pull-right {width:50%;float:right;background:#ecdfcf url(./bg.jpg) no-repeat center center;}
+.juser_login {width:50%;margin:0 auto;height:600px;}
+.juser_login_left h1{margin:0;padding:150px 0 30px 0;font-size:22px;}
+#juser_login {display:block;}
+.formFiled {margin-bottom:20px;}
+.formFiled label {display:inline-block;width:100%;}
+.formFiled .juser_input {display:block;width:100%;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;color:#555; background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;outline:none;}
+.formFiled .juser_input:focus {border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+#inputSub{color:#fff;background-color:#00a2ca;border-color:#00a2ca;}
+.juser_sub {margin-bottom:5px;}
+.juser_open {height:40px;line-height:40px;}
+.juser_open span {display:inline-block;}
+.juser_open .juser_open_way {display:inline-block;padding-left:24px;margin-right:5px;background-image:url(./sns.png);background-repeat:no-repeat;text-decoration:none;}
+.juser_openqq {background-position:-4px -167px;}
+.juser_openqq:hover {background-position:-4px -2px;}
+.juser_openwb {background-position:-4px -222px;}
+.juser_openwb:hover {background-position:-4px -57px;}
+.JnoAuth .pull-right h2 {margin:0;padding:150px 0 30px 0;font-size:24px;text-align:center;}
+.JnoAuth .pull-right h3 {padding-top:130px;text-align:center;}
+.JnoAuth .pull-right h3 a {display:inline-block;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;color:#fff; background-color:#00a2ca;background-image:none;border:1px solid #00a2ca;border-radius:3px;}
+.juser_register h1 {padding:60px 0 30px 0;}
+.juser_register .formFiled {margin-bottom:12px;}
+.juser_layer_tips {position:absolute;width:100%;top:10px;z-index:7;}
+.juser_openlogin_tips {color:green;margin:0 10px;height:40px;background:#ECF9C6 url(./s.png) no-repeat 5px 3px;line-height:40px;border-radius:3px;padding:0 0 0 40px;border:1px solid #D3E4A4;}
+.juser_openlogin_tips strong {font-weight:normal;color:#000;}
+.juser_openlogin_tips a {color:#06f;text-decoration:underline;}
+.juser_openlogin_tips a:hover {color:#09f;text-decoration:none;}
+/**html status tips style**/
+.juser_tips {width:40%;padding:5px 15px 15px 15px;margin:65px auto;border-style:solid;border-width:1px;border-radius:5px;box-shadow:0 4px 23px 5px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.15);}
+.juser_tips_error {border-color:#FF6666;background-color:#FCEAEA;}
+.juser_tips h3 {margin:0 0 15px 0;padding:0;height:30px;line-height:30px;font-size:20px;}
+.juser_tips .juser_tips_text {margin:35px 0 40px 0;padding:0 0 0 40px;font-size:15px;height:32px;line-height:35px;}
+.juser_tips_error h3{color:#CC0033;}
+.juser_tips_error .juser_tips_text {background:url(./f.png) no-repeat 0 0;color:#CC0033;}
+.juser_tips p.juser_tips_des {font-size:13px;color:#999;margin-bottom:0;text-align:right;}
+.juser_tips_des a {color:#9cc;}
+.juser_tips_des a:hover {text-decoration:underline;}
+.juser_tips_success {border-color:#99CC33;background-color:#E9FAC6;}
+.juser_tips_success h3{color:#99CC33;}
+.juser_tips_success .juser_tips_text {background:url(./s.png) no-repeat 0 0;color:#99CC33;}
+/**Html Node statu tips**/
+.juser_sign_tips {width:100%;position:absolute;left:0;top:0;right:0;overflow:hidden;line-height:50px;font-size:15px;color:#fff;text-align:center;margin:0;height:50px;z-index:10;display:none;}
+.juser_sign_error {background-color:#f66;}
+.juser_sign_success {background-color:#9c6;}

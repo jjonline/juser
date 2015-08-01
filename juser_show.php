@@ -54,9 +54,9 @@ if($ReflctionClass->hasMethod($Acttion)) {
 /*===================================================================================================*/
 function Juser_getTitle($action) {
 	$Title 			= 	array(
-		'__empty' 		=>	'请登录_',
+		'__empty' 		=>	'登录_',
 		'register' 		=>	'注册_',
-		'login' 		=>	'请登录_',
+		'login' 		=>	'登录_',
 		'openlogin' 	=>	'',
 		'opencallback' 	=>	'',
 		'usercenter' 	=>	'会员中心_',
