@@ -49,12 +49,8 @@ class JuserRouter {
 					$_POST[$key] 				=  trim($value);
 				}
 				if(!empty($_POST['u'])) {
-					if(Juser_is_uid($_POST['u'])) {
-						$InputData['id']   		=  $_POST['u'];
-						$InputData['_pk']  		=  true;
-					}else if(Juser_is_mail($_POST['u'])) {
-						$InputData['mail'] 	   	=  $_POST['u'];
-						$InputData['_pk']  	   	=  false;
+					if(Juser_is_mail($_POST['u'])) {
+						$InputData['mail'] 	   	=  strtolower($_POST['u']);#数据库仅记录小写的邮箱	
 					}
 				}
 				if(!empty($_POST['p'])) {
@@ -77,7 +73,7 @@ class JuserRouter {
 				}
 				#注册邮箱不允许使用管理员的邮箱
 				if(!empty($_POST['u']) && Juser_is_mail($_POST['u']) && !in_array($_POST['u'],Juser_get_admin_mail())) {
-					$InputData['mail'] 	   		=  $_POST['u'];					
+					$InputData['mail'] 	   		=  strtolower($_POST['u']);	#数据库仅记录小写的邮箱				
 				}else {
 					$InputData['mail'] 	   		=  false;
 				}
@@ -88,32 +84,6 @@ class JuserRouter {
 				}
 				if(!empty($_POST['url']) && Juser_is_url($_POST['url'])) {
 					$InputData['url']  			=  $_POST['url'];
-				}else {
-					$InputData['url']  			=  BLOG_URL;#注册时未设定url 默认使用本博客的url
-				}
-				return $InputData;
-			case 'open':
-				foreach ($_POST as $key => $value) {
-					$_POST[$key] 				=  trim($value);
-				}
-				#用户昵称设定  禁止使用管理员、作者昵称以及博客名
-				if(!empty($_POST['n']) && mb_strlen($_POST['n'],'UTF-8')<16) {
-					$fobidName 					=  array_merge(Juser_get_admin_name(),array('admin','administrator','writer','visitor',Option::get('blogname')));
-					$UserName 					=  strip_tags($_POST['n']);
-					$InputData['name'] 	   		=  str_replace($fobidName,'**',$UserName);
-				}else {
-					$InputData['name'] 	   		=  false;#便于开放平台获取到的用户名进行覆盖
-				}
-				#注册邮箱不允许使用管理员的邮箱
-				if(!empty($_POST['u']) && Juser_is_mail($_POST['u']) && !in_array($_POST['u'],Juser_get_admin_mail())) {
-					$InputData['mail'] 	   		=  $_POST['u'];					
-				}else {
-					$InputData['mail'] 	   		=  false;#用户填写的邮箱不符合要求
-				}
-				if(!empty($_POST['url']) && Juser_is_url($_POST['url'])) {
-					$InputData['url']  			=  $_POST['url'];
-				}else {
-					$InputData['url']  			=  BLOG_URL;#注册时未设定url 默认使用本博客的url
 				}
 				return $InputData;
 			default:

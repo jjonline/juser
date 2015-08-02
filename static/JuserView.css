@@ -9,8 +9,8 @@
  *
  */
 .container {box-sizing:border-box;/*包裹布局容器::width;margin等插件不整*/}
-.juser_container {background:#fff;  box-sizing: border-box;}
-.pull {background:#fff;}
+.juser_container {background:#fff;box-sizing:border-box;}
+.JnoAuth .pull {background:#fff;}
 /*login register etc*/
 .JnoAuth {padding:0;}
 .JnoAuth .pull {}
@@ -60,3 +60,32 @@
 .juser_sign_tips {width:100%;position:absolute;left:0;top:0;right:0;overflow:hidden;line-height:50px;font-size:15px;color:#fff;text-align:center;margin:0;height:50px;z-index:10;display:none;}
 .juser_sign_error {background-color:#f66;}
 .juser_sign_success {background-color:#9c6;}
+/*user Center*/
+.JAuth {background:#eee;}
+.JAuth .pull {padding:0 0 0 220px;}
+.JAuth .Juser_left {float:left;margin:15px 0 15px -220px;width:220px;}
+.JAuth .Juser_left .JAuth_left {width:200px;min-height:450px;}
+.JAuth .Juser_left .JAuth_left .Juser_nav {background:#fff;margin-bottom:20px;padding:10px 0;}
+.JAuth .Juser_left .JAuth_left .Juser_nav .items a {display:block;padding:10px 20px;line-height:20px;font-weight:bold;font-size:15px;color:#666;}
+.JAuth .Juser_left .JAuth_left .Juser_nav .current a {color:#FFF;background:#00a2ca;}
+.JAuth .Juser_left .JAuth_left .Juser_nav .signOut a {font-weight:normal;color:#f66;}
+.JAuth .Juser_left .JAuth_left .Juser_nav .signOut a:hover {text-decoration:underline;}
+.JAuth .Juser_right {width:100%;margin:15px 0;}
+.JAuth .Juser_right .JAuth_right {background:#fff;min-height:450px;}
+.JAuth .Juser_info {padding:10px 0 0;background:#fff;height:80px;margin-top:15px;}
+.JAuth .Juser_info .Juser_info_ul {background:#fff;height:60px;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item {float:left;margin:0 10px;border-right:1px solid #eee;padding-left:80px;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item img {width:60px;height:60px;border-radius:50%;border:1px solid #dedede;margin-left:-70px;display:inline-block;float:left;background:#eee;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item h2 {font-weight:normal;font-size:16px;margin:0;padding:7px 20px 10px 0;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item p {height:20px;font-size:14px;margin:0;padding:0 10px 0 0;color:#999;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item_qq p {line-height:20px;padding-left:23px;background:url(./sns.png) no-repeat -5px -11px;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item_wb {border-right:none;}
+.JAuth .Juser_info .Juser_info_ul .Juser_item_wb p {line-height:20px;padding-left:24px;background:url(./sns.png) no-repeat -5px -67px;}
+.Juser_item_open em {font-size:12px;font-style:normal;color:#CC0033;}
+.Juser_item_open span {font-size:12px;font-style:normal;color:#99CC33;}
+.Juser_item_open a {color:#0099CC;font-size:14px;}
+.Juser_item_open a:hover {color:#3366CC;text-decoration:underline;}
+/**JAuth_content**/
+.JAuth_content {padding:20px;}
+.JAuth_content a {color:#00a2ca;}
+.JAuth_content a:hover {text-decoration:underline;}

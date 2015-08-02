@@ -103,6 +103,8 @@ class Juser {
         }
         $UserInfo = self::getUserInfoByID($juser_id);
         if (!$UserInfo) {
+            #有cookie 但没有查询到用户数据 强制删除cookie
+            self::setAuthOut();
             return false;
         }
         return $UserInfo;
@@ -117,7 +119,7 @@ class Juser {
     }
     #通过邮箱查找juser用户
     public static function getUserInfoByMail($mail) {
-        if(empty($juser_id) || !Juser_is_mail($mail)) { return false; }
+        if(!Juser_is_mail($mail)) { return false; }
         if(empty(self::$JuserModel)) {
             self::$JuserModel   =   new JuserModel();
         }
@@ -236,6 +238,16 @@ function Juser_randString($len=8) {
     $chars   =   str_shuffle($chars);
     $str     =   substr($chars,0,$len);
     return $str;
+}
+/**
+ * @des 获取avator头像 解决被墙
+ * @param email
+ * @return string 
+ */
+function Juser_getGravatar($email,$s = 60) {
+    $hash   = md5($email);
+    $avatar = "https://secure.gravatar.com/avatar/$hash?s=$s";
+    return $avatar;
 }
 /**
  * 判断参数字符串是否为密码格式（必须包含数字、字母的6至18位密码串）

@@ -14,6 +14,7 @@ require_once 'juser_functions.php';#引入函数库、数据库操作类
 global $CACHE;
 // $Config    	 =  $CACHE->readCache('juser_config');
 // $CACHE->cacheWrite(serialize(array('qq'=>array('key'=>'200730','secret'=>'194bccdb27a20ee1a6831eec141d81c2'),'sina'=>array('key'=>'4025051940','secret'=>'ee3278d08ec58d98e85de5024734e660'))),'juser_config');
+// var_dump(Juser::getUserInfoByMail('jjonline@jjonline.cn'));
 /**
  * Juser载入后台菜单
  * @param null

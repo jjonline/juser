@@ -300,7 +300,7 @@ class JuserModel {
             }
         }
         #效验新增数据合法性
-        if(!isset($data['email']) || !isset($data['password']) || !isset($data['salt'])) {
+        if(!isset($data['mail']) || !isset($data['password'])) {
             return false;
         }
         #time

@@ -10,6 +10,7 @@ require_once 'juser_functions.php';#引入函数库、数据库操作类
 require_once 'JuserOpen.class.php';
 require_once 'JuserController.class.php';
 require_once 'JuserRouter.class.php';
+require_once 'JuserCommnet.class.php';
 /*===================================================================================================*/
 global $CACHE;
 $BlogInfo  	 		=	$CACHE->readCache('options');
@@ -38,11 +39,11 @@ $ReflctionClass 	=	new ReflectionClass('JuserController');
 if($ReflctionClass->hasMethod($Acttion)) {
 	$ReflectionMethod  = $ReflctionClass->getMethod($Acttion);
 	if($ReflectionMethod->isPublic() && !$ReflectionMethod->isStatic()) {
-		if(IS_GET && !in_array($Acttion,array('openlogin','opencallback'))){
+		if(IS_GET && !in_array($Acttion,array('openlogin'))){
 			include View::getView('header');
 		}
 		$ReflectionMethod->inVoke($JuserController,$isLogin);
-		if(IS_GET && !in_array($Acttion,array('openlogin','opencallback'))) {
+		if(IS_GET && !in_array($Acttion,array('openlogin'))) {
 			include View::getView('footer');
 		}
 	}else {
