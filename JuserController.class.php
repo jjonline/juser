@@ -441,10 +441,43 @@ STR;
 	 */
 	public function UserInfo($UserInfo=null) {
 		$leftBar  			 =	$this->__getAuthLeft('UserInfo');
+		$retTime  			 =  date('Y-m-d H:i:s',$UserInfo['time']);
+		$name                =  empty($UserInfo['name'])?'路人乙':$UserInfo['name'];
+		$url                 =  empty($UserInfo['url'])?'':$UserInfo['url'];
+		$qq  				 =  empty($UserInfo['qq'])?'':$UserInfo['qq'];
+		$phone				 =  empty($UserInfo['phone'])?'':$UserInfo['phone'];
 		$rightBar = <<<STR
-		<div class="JAuth_right">
-			<div class="JAuth_content">修改个人资料</div>
+	<div class="JAuth_right">
+		<div class="JAuth_content">
+			<div class="JAuth_update_info">
+				<div class="Juser_ipt">
+					<label for="Juser_iptName">注册时间</label>
+					{$retTime}
+				</div>
+				<form method="POST" id="Juser_userInfo_form" class="Juser_form" action="{$blogUrl}?plugin=juser&a=doChange">
+				<div class="Juser_ipt">
+					<label for="Juser_iptName">昵称</label>
+					<input type="text" class="Juser_input" placeholder="设置昵称，可留空" id="Juser_iptName" autocomplete="off" name="n" value="{$name}">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptUrl">网址</label>
+					<input type="text" class="Juser_input" placeholder="博客或空间地址，可留空" id="Juser_iptUrl" autocomplete="off" name="url" value="{$url}">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptQQ">QQ</label>
+					<input type="text" class="Juser_input" placeholder="QQ号码，可留空" id="Juser_iptQQ" autocomplete="off" name="qq" value="{$qq}">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptPhone">手机号</label>
+					<input type="text" class="Juser_input" placeholder="手机号码，可留空" id="Juser_iptPhone" autocomplete="off" name="phone" value="{$phone}">
+				</div>
+				<div class="Juser_ipt juser_ipt_sub">
+					<input type="submit" class="Juser_input Juser_Btn" id="Juser_Sub_register" value="确认修改资料">
+				</div>
+				</form>
+			</div>
 		</div>
+	</div>
 STR;
 		$this->__show($leftBar,$rightBar,$UserInfo);
 	}
@@ -458,12 +491,108 @@ STR;
 		$leftBar  			 =	$this->__getAuthLeft('UserPassWd');
 		$rightBar = <<<STR
 		<div class="JAuth_right">
-			<div class="JAuth_content">修改账号密码</div>
+			<div class="JAuth_content">
+				<div class="JAuth_update_pwd">
+				<div class="Juser_ipt">
+					<h2>修改账户密码</h2>
+				</div>
+				<form method="POST" id="Juser_userInfo_form" class="Juser_form" action="{$blogUrl}?plugin=juser&a=doChange">
+				<div class="Juser_ipt">
+					<label for="Juser_iptoPwd">原密码</label>
+					<input type="password" class="Juser_input" placeholder="正在使用的密码" id="Juser_iptoPwd" autocomplete="off" name="n">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptPwd">新密码</label>
+					<input type="password" class="Juser_input" placeholder="新密码" id="Juser_iptPwd" autocomplete="off" name="url">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptrPwd">重复新密码</label>
+					<input type="password" class="Juser_input" placeholder="重复新密码" id="Juser_iptrPwd" autocomplete="off" name="phone">
+				</div>
+				<div class="Juser_ipt juser_ipt_sub">
+					<input type="submit" class="Juser_input Juser_Btn" id="Juser_Sub_register" value="确认修改资料">
+				</div>
+				</form>
+			</div>
+			</div>
 		</div>
 STR;
 		$this->__show($leftBar,$rightBar,$UserInfo);
 	}
 	
+	/**
+	 * Juser会员中心修改资料或修改密码操作方法
+	 * @param null
+	 * @return mixed
+	 */
+	public function doChange($UserInfo=null) {
+		if(!IS_POST || !IS_AJAX || !$UserInfo) {
+			emDirect(BLOG_URL.'?plugin=juser&a=UserCenter');
+		}
+		$InputData       		=	array();
+		foreach($_POST as $key => $value) {
+			$_POST[$key] 		=	trim($value);
+		}
+		#用户昵称处理
+		if(!empty($_POST['n']) && mb_strlen($_POST['n'],'UTF-8')<8 && $UserInfo['name']!=$_POST['n']) {
+			$fobidName 			=	array_merge(Juser_get_admin_name(),array('admin','administrator','writer','visitor',Option::get('blogname')));
+			$UserName 			=	strip_tags($_POST['n']);
+			$InputData['name'] 	=	str_replace($fobidName,'**',$UserName);
+		}
+		#url
+		if(!empty($_POST['url']) && Juser_is_url($_POST['url']) && $UserInfo['url']!=$_POST['url']) {
+			$InputData['url']  	=	rtrim($_POST['url'],'/').'/';
+		}
+		#qq
+		if(!empty($_POST['qq']) && Juser_is_uid($_POST['qq']) && $UserInfo['qq']!=$_POST['qq']) {
+			$InputData['qq']  	=	$_POST['qq'];
+		}
+		#phone
+		if(!empty($_POST['phone']) && Juser_is_phone($_POST['phone']) && $UserInfo['phone']!=$_POST['phone']) {
+			$InputData['phone'] =	$_POST['phone'];
+		}
+		#修改密码动作
+		$isChangePwd            =   (!empty($_POST['op']) || !empty($_POST['p']) || !empty($_POST['rp']));
+		if($isChangePwd) {
+			if(empty($_POST['op']) || !Juser_is_password($_POST['op'])) {
+				$this->ajaxReturn(array('code'=>'501','info'=>'原密码格式错误'));
+			}
+			if(empty($_POST['p']) || !Juser_is_password($_POST['p'])) {
+				$this->ajaxReturn(array('code'=>'501','info'=>'新密码格式错误'));
+			}
+			if(empty($_POST['rp']) || !Juser_is_password($_POST['rp'])) {
+				$this->ajaxReturn(array('code'=>'501','info'=>'重复新密码格式错误'));
+			}
+			if($_POST['rp']!=$_POST['p']) {
+				$this->ajaxReturn(array('code'=>'501','info'=>'原密码和新密码不一致'));
+			}
+			if($_POST['p']==$_POST['op']) {
+				$this->ajaxReturn(array('code'=>'501','info'=>'密码未修改'));
+			}
+			#效验原始密码 能执行到此步骤则用户一定存在
+			$isCheck                   =	Juser::checkPassword($_POST['op'],$UserInfo['password']);
+			if($isCheck) {
+				$InputData['password'] =	Juser::genPassword($_POST['op']);
+			}else {
+				$this->ajaxReturn(array('code'=>'501','info'=>'效验原密码失败'));
+			}
+		}
+		if(!$InputData) {
+			$this->ajaxReturn(array('code'=>'501','info'=>'资料未修改'));
+		}
+		#执行写入数据
+		$InputData['id']    =	$UserInfo['id'];
+		$JuserModel  		=	Juser::getJuserModel();
+		$ret 		 		=	$JuserModel->data($InputData)->save();
+		if(!$ret) {
+			$this->ajaxReturn(array('code'=>'501','info'=>'操作失败，服务器异常'));
+		}
+		if($isChangePwd) {
+			$this->ajaxReturn(array('code'=>'200','info'=>'密码修改成功'));
+		}
+		$this->ajaxReturn(array('code'=>'200','info'=>'资料修改成功'));
+	}
+
 	/**
 	 * 快速获取登录状态下左侧导航栏html
 	 * @param string $naviName 当前导航名

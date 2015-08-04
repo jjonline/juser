@@ -83,7 +83,7 @@ class JuserRouter {
 					$InputData['password']  	=  false;
 				}
 				if(!empty($_POST['url']) && Juser_is_url($_POST['url'])) {
-					$InputData['url']  			=  $_POST['url'];
+					$InputData['url']  			=  rtrim($_POST['url'],'/').'/';
 				}
 				return $InputData;
 			default:

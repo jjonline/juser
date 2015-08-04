@@ -28,6 +28,8 @@ function callback_init() {
 						`url` char(128) DEFAULT NULL,
 						`password` char(64) NOT NULL,
 						`sex` enum('f','m') NOT NULL DEFAULT 'f',
+						`phone` bigint(20) DEFAULT NULL,
+						`qq` bigint(20) unsigned DEFAULT NULL,
 						`qq_name` char(20) DEFAULT NULL,
 						`qq_openid` char(64) DEFAULT NULL,
 						`qq_token` char(32) DEFAULT NULL,

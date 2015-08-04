@@ -29,7 +29,7 @@ if($isLogin && in_array($Acttion,array('__empty','register','login'))) {
 	emDirect(BLOG_URL.'?plugin=juser&a=UserCenter');
 }
 #非登录状态下的控制器矛盾处理
-if(!$isLogin && in_array($Acttion,array('usercenter','userinfo','userpasswd','usercomment'))) {
+if(!$isLogin && in_array($Acttion,array('doChange','usercenter','userinfo','userpasswd','usercomment'))) {
 	emDirect(BLOG_URL.'?plugin=juser&a=login');
 }
 $site_title 	    = 	Juser_getTitle($Acttion).$site_title;

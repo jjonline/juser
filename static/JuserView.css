@@ -17,8 +17,8 @@
 .Juser_tips_success {background-color:#9c6;}
 .Juser_tips_error {background-color:#f66;}
 .Juser_tips_alert {background-color:#99CCCC;}
-.Juser_tips_loading {background-color:#dedede;color:#333;}
-.Juser_tips_loading p {padding-left:30px;background:url(./loading.gif) no-repeat left center;}
+.Juser_tips_loading {background-color:#000;}
+.Juser_tips_loading p {padding-left:24px;background:url(./loading.gif) no-repeat left center;}
 /**open login And bind Tips**/
 .Juser_opentips_container {position:absolute;width:100%;top:10px;z-index:7;top:10px;left:0;}
 .Juser_opentips_text{color:green;margin:0 10px;height:40px;background:#ECF9C6 url(./s.png) no-repeat 5px 3px;line-height:40px;border-radius:3px;padding:0 0 0 40px;border:1px solid #D3E4A4;}
@@ -67,15 +67,15 @@
 .Juser_figure_item_open a {color:#0099CC;font-size:14px;}
 .Juser_figure_item_open a:hover {color:#3366CC;text-decoration:underline;}
 /**lefBar Navi**/
-.Juser_Auth .Juser_container {padding:0 0 0 220px;}
-.Juser_Auth .Juser_left {float:left;margin:15px 0 0 -220px;width:220px;}
+.Juser_Auth .Juser_container {padding:0 0 0 215px;}
+.Juser_Auth .Juser_left {float:left;margin:10px 0 0 -215px;width:215px;}
 .Juser_Auth .Juser_left .JAuth_left {width:200px;}
 .Juser_nav {background:#fff;margin-bottom:20px;padding:10px 0;}
 .Juser_nav .items a {display:block;padding:10px 20px;line-height:20px;font-weight:bold;font-size:15px;color:#666;}
 .Juser_nav .current a {color:#FFF;background:#00a2ca;}
 .Juser_nav .signOut a {font-weight:normal;color:#f66;}
 .Juser_nav .signOut a:hover {text-decoration:underline;}
-.Juser_Auth .Juser_right {float:right;width:100%;padding-top:15px;margin-bottom:5px;}
+.Juser_Auth .Juser_right {float:right;width:100%;padding-top:10px;}
 .Juser_Auth .Juser_right .JAuth_right {background:#fff;min-height:450px;padding:20px;}
 /**UserCenter**/
 /**comment manage**/
@@ -92,9 +92,10 @@
 .Juser_page a,.Juser_page em {background:#4CAE4C;}
 .Juser_page a:hover {color:#fff;opacity:1;filter:alpha(opacity=100);}
 /**infomation manage**/
+.Juser_Auth .JAuth_update_info {width:35%;margin:5px 0 0 120px;}
 /**pwd manage**/
-
-		
+.Juser_Auth .JAuth_update_pwd {width:35%;margin:5px 0 0 120px;}
+.Juser_Auth .JAuth_update_pwd h2 {font-size:20px;margin:30px 0 0 0;padding:5px 0 25px 0;}		
 /**html status**/
 .Juser .Juser_status {width:40%;padding:5px 15px 15px 15px;margin:65px auto;border-style:solid;border-width:1px;border-radius:5px;box-shadow:0 4px 23px 5px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.15);}
 .Juser_status h3 {margin:0 0 15px 0;padding:0;height:30px;line-height:30px;font-size:20px;}
