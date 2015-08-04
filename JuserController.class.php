@@ -395,6 +395,10 @@ STR;
 	 * @return mixed
 	 */
 	public function UserCenter($UserInfo=null) {
+		#设置评论者cookie等信息
+		if(empty($_COOKIE['postermail']) || empty($_COOKIE['commentposter']) || $_COOKIE['postermail']!=$UserInfo['mail'] || $_COOKIE['commentposter']!=$UserInfo['name']) {
+			Juser_setCommentCookie($UserInfo['name'],$UserInfo['mail'],$UserInfo['url']);
+		}		
 		$leftBar  			 =	$this->__getAuthLeft('UserCenter');
 		$rightBar = <<<STR
 		<div class="JAuth_right">

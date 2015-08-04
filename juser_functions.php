@@ -204,6 +204,15 @@ class Juser {
 		return file_get_contents('http://www.jjonline.cn/report.php?version='.self::Juser_Version.'&url='.BLOG_URL,false,$params);
 	}
 }
+#设置评论昵称、邮箱、url信息
+function Juser_setCommentCookie($name,$mail,$url) {
+    $cookietime = time() + 31536000;
+    setcookie('commentposter',$name,$cookietime);
+    setcookie('postermail',$mail,$cookietime);
+    if(!empty($url)) {
+        setcookie('posterurl',$url,$cookietime);
+    }
+}
 /*获取管理员、投稿作者的昵称和用户名--juser禁用这些昵称进行注册*/
 function Juser_get_admin_name() {
     global $CACHE;
