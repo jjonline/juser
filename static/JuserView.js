@@ -9,14 +9,14 @@
  */
 $(function () {
 	/*登录*/
-	var loginNode    = $('#juser_login_form'),
-		registerNode = $('#juser_register_form');
+	var loginNode    = $('#Juser_login_form'),
+		registerNode = $('#Juser_register_form');
 	//登录操作
 	if(loginNode.html()) {
-		var mailNode = $('#inputEmail'),
-			pwdNode  = $('#inputPwd'),
-			tokenVal = $('#inputToken').val(),
-			Btn      = $('#inputSub'),
+		var mailNode = $('#Juser_iptMail'),
+			pwdNode  = $('#Juser_iptPwd'),
+			tokenVal = $('#Juser_iptToken').val(),
+			Btn      = $('#Juser_Sub_login'),
 			_Url     = loginNode.attr('action'),
 			_redirect= _Url.replace('doLogin','UserCenter');
 		loginNode.submit(function () {
@@ -30,7 +30,7 @@ $(function () {
 				Jalert('密码格式错误','error');
 				return false;
 			}
-			Jalert('正在登录，请稍后...','success',30);
+			Jalert('正在登录，请稍后...','loading',30);
 			Btn.attr('disabled',true).fadeTo('slow',0.5);//禁用点击按钮
 			$.ajax({
 				type: "POST",
@@ -67,13 +67,13 @@ $(function () {
 	}
 	//注册操作
 	if(registerNode.html()) {
-		var nameNode = $('#inputName'),
-			mailNode = $('#inputEmail'),
-			urlNode  = $('#inputUrl'),
-			pwdNode  = $('#inputPwd'),
-			pwdrNode = $('#inputrPwd'),
-			tokenVal = $('#inputToken').val(),
-			Btn      = $('#inputSub'),
+		var nameNode = $('#Juser_iptName'),
+			mailNode = $('#Juser_iptMail'),
+			urlNode  = $('#Juser_iptUrl'),
+			pwdNode  = $('#Juser_iptPwd'),
+			pwdrNode = $('#Juser_iptrPwd'),
+			tokenVal = $('#Juser_iptToken').val(),
+			Btn      = $('#Juser_Sub_login'),
 			_Url     = registerNode.attr('action'),
 			_redirect= _Url.replace('doRegister','UserCenter');
 		registerNode.submit(function () {
@@ -145,12 +145,17 @@ $(function () {
 	//signTipsFunc
 	function Jalert(text,status,time) {
 		var t = time || 3;//默认3s
-		var tipsNode = $('#juser_alert');
+		var tipsNode = $('#Juser_tips');
+		tipsNode.removeClass('Juser_tips_success Juser_tips_error Juser_tips_alert Juser_tips_loading').empty();
 		if(status == 'error') {
-			tipsNode.removeClass('juser_sign_success').addClass('juser_sign_error').empty().append(text).slideDown();
-		}else {
-			tipsNode.removeClass('juser_sign_error').addClass('juser_sign_success').empty().append(text).slideDown();
-		}		
+			tipsNode.addClass('Juser_tips_error').append(text).slideDown();
+		}else if(status == 'success') {
+			tipsNode.addClass('Juser_tips_success').append(text).slideDown();
+		}else if(status == 'alert') {
+			tipsNode.addClass('Juser_tips_alert').append(text).slideDown();
+		}else if(status == 'loading') {
+			tipsNode.addClass('Juser_tips_loading').append('<p>'+text+'</p>').slideDown();
+		}
 		setTimeout(function () {
 			tipsNode.slideUp();
 		},t*1000);
@@ -185,7 +190,7 @@ $(function () {
 	//提示框相关处理
 	function setGo() {
 		var t 		 = 3,handle,
-			pNode 	 = $('.juser_tips_des'),
+			pNode 	 = $('.Juser_status_tips'),
 			sNode 	 = pNode.find('span'),
 			redirect = pNode.find('a').attr('href');
 			t 	 	 = sNode.text();
@@ -199,7 +204,7 @@ $(function () {
 			sNode.empty().text(t);
 		},1000);
 	}
-	var SuccessNode = $('.juser_success'),ErrorNode = $('.juser_error');
+	var SuccessNode = $('.Juser_status_success'),ErrorNode = $('.Juser_status_error');
 	if(ErrorNode.html()) {setGo();}
 	if(SuccessNode.html()) {setGo();}
 });

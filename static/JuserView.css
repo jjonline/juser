@@ -8,84 +8,102 @@
  *Version: 1.0
  *
  */
-.container {box-sizing:border-box;/*包裹布局容器::width;margin等插件不整*/}
-.juser_container {background:#fff;box-sizing:border-box;}
-.JnoAuth .pull {background:#fff;}
-/*login register etc*/
-.JnoAuth {padding:0;}
-.JnoAuth .pull {}
-.JnoAuth .pull-left {width:50%;float:left;background:#fff;position:relative;z-index:8;}
-.JnoAuth .pull-right {width:50%;float:right;background:#ecdfcf url(./bg.jpg) no-repeat center center;}
-.juser_login {width:50%;margin:0 auto;height:600px;}
-.juser_login_left h1{margin:0;padding:150px 0 30px 0;font-size:22px;}
-#juser_login {display:block;}
-.formFiled {margin-bottom:20px;}
-.formFiled label {display:inline-block;width:100%;}
-.formFiled .juser_input {display:block;width:100%;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;color:#555; background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;outline:none;}
-.formFiled .juser_input:focus {border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+.Juser {background:#fff;z-index:10;margin:10px auto;padding:0;}
+
+/**html tips**/
+.Juser_tips_container {z-index:11;width:100%;position:absolute;top:0;left:0;right:0;}
+.Juser_tips {z-index:12;width:100%;position:absolute;top:0;left:0;right:0;overflow:hidden;line-height:50px;font-size:15px;color:#fff;text-align:center;margin:0;height:50px;display:none;}
+.Juser_tips p {margin:0;padding:0;display:inline-block;}
+.Juser_tips_success {background-color:#9c6;}
+.Juser_tips_error {background-color:#f66;}
+.Juser_tips_alert {background-color:#99CCCC;}
+.Juser_tips_loading {background-color:#dedede;color:#333;}
+.Juser_tips_loading p {padding-left:30px;background:url(./loading.gif) no-repeat left center;}
+/**open login And bind Tips**/
+.Juser_opentips_container {position:absolute;width:100%;top:10px;z-index:7;top:10px;left:0;}
+.Juser_opentips_text{color:green;margin:0 10px;height:40px;background:#ECF9C6 url(./s.png) no-repeat 5px 3px;line-height:40px;border-radius:3px;padding:0 0 0 40px;border:1px solid #D3E4A4;}
+.Juser_opentips_text strong {font-weight:normal;color:#000;}
+.Juser_opentips_text a {color:#06f;text-decoration:underline;}
+.Juser_opentips_text a:hover {color:#09f;text-decoration:none;}
+/**no Auth**/
+.Juser_noAuth .Juser_form {display:block;}
+.Juser_noAuth .Juser_left {width:50%;float:left;background:#fff;position:relative;z-index:8;}
+.Juser .Juser_sign_left {width:50%;margin:0 auto;height:600px;}
+.Juser .Juser_sign_left h1 {margin:0;padding:60px 0 20px 0;font-size:22px;}
+.Juser .Juser_login_left h1 {margin:0;padding:155px 0 20px 0;font-size:22px;}
+.Juser_ipt {margin-bottom:15px;}
+.Juser_ipt label {display:inline-block;width:100%;}
+.Juser_input {display:block;width:100%;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;color:#555; background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;outline:none;}
+.Juser_input:focus {border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
-#inputSub{color:#fff;background-color:#00a2ca;border-color:#00a2ca;}
-.juser_sub {margin-bottom:5px;}
-.juser_open {height:40px;line-height:40px;}
-.juser_open span {display:inline-block;}
-.juser_open .juser_open_way {display:inline-block;padding-left:24px;margin-right:5px;background-image:url(./sns.png);background-repeat:no-repeat;text-decoration:none;}
-.juser_openqq {background-position:-4px -167px;}
-.juser_openqq:hover {background-position:-4px -2px;}
-.juser_openwb {background-position:-4px -222px;}
-.juser_openwb:hover {background-position:-4px -57px;}
-.JnoAuth .pull-right h2 {margin:0;padding:150px 0 30px 0;font-size:24px;text-align:center;}
-.JnoAuth .pull-right h3 {padding-top:130px;text-align:center;}
-.JnoAuth .pull-right h3 a {display:inline-block;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;color:#fff; background-color:#00a2ca;background-image:none;border:1px solid #00a2ca;border-radius:3px;}
-.juser_register h1 {padding:60px 0 30px 0;}
-.juser_register .formFiled {margin-bottom:12px;}
-.juser_layer_tips {position:absolute;width:100%;top:10px;z-index:7;}
-.juser_openlogin_tips {color:green;margin:0 10px;height:40px;background:#ECF9C6 url(./s.png) no-repeat 5px 3px;line-height:40px;border-radius:3px;padding:0 0 0 40px;border:1px solid #D3E4A4;}
-.juser_openlogin_tips strong {font-weight:normal;color:#000;}
-.juser_openlogin_tips a {color:#06f;text-decoration:underline;}
-.juser_openlogin_tips a:hover {color:#09f;text-decoration:none;}
-/**html status tips style**/
-.juser_tips {width:40%;padding:5px 15px 15px 15px;margin:65px auto;border-style:solid;border-width:1px;border-radius:5px;box-shadow:0 4px 23px 5px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.15);}
-.juser_tips_error {border-color:#FF6666;background-color:#FCEAEA;}
-.juser_tips h3 {margin:0 0 15px 0;padding:0;height:30px;line-height:30px;font-size:20px;}
-.juser_tips .juser_tips_text {margin:35px 0 40px 0;padding:0 0 0 40px;font-size:15px;height:32px;line-height:35px;}
-.juser_tips_error h3{color:#CC0033;}
-.juser_tips_error .juser_tips_text {background:url(./f.png) no-repeat 0 0;color:#CC0033;}
-.juser_tips p.juser_tips_des {font-size:13px;color:#999;margin-bottom:0;text-align:right;}
-.juser_tips_des a {color:#9cc;}
-.juser_tips_des a:hover {text-decoration:underline;}
-.juser_tips_success {border-color:#99CC33;background-color:#E9FAC6;}
-.juser_tips_success h3{color:#99CC33;}
-.juser_tips_success .juser_tips_text {background:url(./s.png) no-repeat 0 0;color:#99CC33;}
-/**Html Node statu tips**/
-.juser_sign_tips {width:100%;position:absolute;left:0;top:0;right:0;overflow:hidden;line-height:50px;font-size:15px;color:#fff;text-align:center;margin:0;height:50px;z-index:10;display:none;}
-.juser_sign_error {background-color:#f66;}
-.juser_sign_success {background-color:#9c6;}
-/*user Center*/
-.JAuth {background:#eee;}
-.JAuth .pull {padding:0 0 0 220px;}
-.JAuth .Juser_left {float:left;margin:15px 0 15px -220px;width:220px;}
-.JAuth .Juser_left .JAuth_left {width:200px;min-height:450px;}
-.JAuth .Juser_left .JAuth_left .Juser_nav {background:#fff;margin-bottom:20px;padding:10px 0;}
-.JAuth .Juser_left .JAuth_left .Juser_nav .items a {display:block;padding:10px 20px;line-height:20px;font-weight:bold;font-size:15px;color:#666;}
-.JAuth .Juser_left .JAuth_left .Juser_nav .current a {color:#FFF;background:#00a2ca;}
-.JAuth .Juser_left .JAuth_left .Juser_nav .signOut a {font-weight:normal;color:#f66;}
-.JAuth .Juser_left .JAuth_left .Juser_nav .signOut a:hover {text-decoration:underline;}
-.JAuth .Juser_right {width:100%;margin:15px 0;}
-.JAuth .Juser_right .JAuth_right {background:#fff;min-height:450px;}
-.JAuth .Juser_info {padding:10px 0 0;background:#fff;height:80px;margin-top:15px;}
-.JAuth .Juser_info .Juser_info_ul {background:#fff;height:60px;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item {float:left;margin:0 10px;border-right:1px solid #eee;padding-left:80px;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item img {width:60px;height:60px;border-radius:50%;border:1px solid #dedede;margin-left:-70px;display:inline-block;float:left;background:#eee;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item h2 {font-weight:normal;font-size:16px;margin:0;padding:7px 20px 10px 0;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item p {height:20px;font-size:14px;margin:0;padding:0 10px 0 0;color:#999;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item_qq p {line-height:20px;padding-left:23px;background:url(./sns.png) no-repeat -5px -11px;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item_wb {border-right:none;}
-.JAuth .Juser_info .Juser_info_ul .Juser_item_wb p {line-height:20px;padding-left:24px;background:url(./sns.png) no-repeat -5px -67px;}
-.Juser_item_open em {font-size:12px;font-style:normal;color:#CC0033;}
-.Juser_item_open span {font-size:12px;font-style:normal;color:#99CC33;}
-.Juser_item_open a {color:#0099CC;font-size:14px;}
-.Juser_item_open a:hover {color:#3366CC;text-decoration:underline;}
-/**JAuth_content**/
-.JAuth_content {padding:20px;}
-.JAuth_content a {color:#00a2ca;}
-.JAuth_content a:hover {text-decoration:underline;}
+.Juser_Btn {color:#fff;background-color:#00a2ca;border-color:#00a2ca;}
+.Juser_Btn:hover{color:#fff;background-color:#14ABD0;border-color:#00a2ca;}
+.juser_ipt_sub {margin-bottom:5px;}
+.Juser_ipt_open {height:40px;line-height:40px;}
+.Juser_ipt_open span {display:inline-block;}
+.Juser_ipt_open_Btn {display:inline-block;padding-left:24px;margin-right:5px;background-image:url(./sns.png);background-repeat:no-repeat;text-decoration:none;}
+.Juser_ipt_open_qq {background-position:-4px -167px;}
+.Juser_ipt_open_qq:hover {background-position:-4px -2px;}
+.Juser_ipt_open_wb {background-position:-4px -222px;}
+.Juser_ipt_open_wb:hover {background-position:-4px -57px;}
+.Juser_noAuth .Juser_right {width:50%;float:right;background:#fff;position:relative;z-index:8;background:#ecdfcf url(./bg.jpg) no-repeat center center;height:600px;}
+.Juser_noAuth .Juser_right h2 {margin:0;padding:150px 0 30px 0;font-size:24px;text-align:center;}
+.Juser_noAuth .Juser_right h3 {padding-top:130px;text-align:center;}
+.Juser_noAuth .Juser_right h3 a {display:inline-block;height:34px;padding:7px 12px 6px;font-size:14px;line-height:1.42857143;border-radius:3px;text-decoration:none;}
+/**Auth***/
+/**Figure**/
+.Juser_Auth {background:#eee;}
+.Juser_figure {background:#fff;height:80px;}
+.Juser_figure_ul {background:#fff;height:60px;}
+.Juser_figure_item {float:left;margin:0 10px;border-right:1px solid #eee;padding-left:80px;margin-top:10px;}
+.Juser_figure_item img {width:60px;height:60px;border-radius:50%;border:1px solid #dedede;margin-left:-70px;display:inline-block;float:left;background:#eee;}
+.Juser_figure_item h2 {font-weight:normal;font-size:16px;margin:0;padding:7px 20px 10px 0;}
+.Juser_figure_item p {height:20px;font-size:14px;margin:0;padding:0 10px 0 0;color:#999;}
+.Juser_figure_item_qq p {line-height:20px;padding-left:23px;background:url(./sns.png) no-repeat -5px -11px;}
+.Juser_figure_item_wb {border-right:none;}
+.Juser_figure_item_wb p {line-height:20px;padding-left:24px;background:url(./sns.png) no-repeat -5px -67px;}
+.Juser_figure_item_open em {font-size:12px;font-style:normal;color:#CC0033;}
+.Juser_figure_item_open span {font-size:12px;font-style:normal;color:#99CC33;}
+.Juser_figure_item_open a {color:#0099CC;font-size:14px;}
+.Juser_figure_item_open a:hover {color:#3366CC;text-decoration:underline;}
+/**lefBar Navi**/
+.Juser_Auth .Juser_container {padding:0 0 0 220px;}
+.Juser_Auth .Juser_left {float:left;margin:15px 0 0 -220px;width:220px;}
+.Juser_Auth .Juser_left .JAuth_left {width:200px;}
+.Juser_nav {background:#fff;margin-bottom:20px;padding:10px 0;}
+.Juser_nav .items a {display:block;padding:10px 20px;line-height:20px;font-weight:bold;font-size:15px;color:#666;}
+.Juser_nav .current a {color:#FFF;background:#00a2ca;}
+.Juser_nav .signOut a {font-weight:normal;color:#f66;}
+.Juser_nav .signOut a:hover {text-decoration:underline;}
+.Juser_Auth .Juser_right {float:right;width:100%;padding-top:15px;margin-bottom:5px;}
+.Juser_Auth .Juser_right .JAuth_right {background:#fff;min-height:450px;padding:20px;}
+/**UserCenter**/
+/**comment manage**/
+.Juser_comment_items {border-bottom:1px solid #f2f2f2;padding:15px 0 15px 140px;overflow:hidden;}
+.Juser_comment_time {font-size:12px;color:#999;float:left;margin-left:-140px;margin-top:2px;}
+.Juser_comment_text {margin:0 0 10px 0;line-height:25px;}
+.Juser_comment_info {margin:0;font-size:13px;color:#999;}
+.Juser_comment_info a {color:#999;}
+.Juser_comment_info a:hover {color:#666;text-decoration:underline;}
+.Juser_page {margin-top:20px;text-align:center;}
+.Juser_page span,.Juser_page a,.Juser_page em,.Juser_page font {display:inline-block;margin:0 2px;padding:6px 12px 5px;color:#fff;border-radius:2px;opacity:0.80;filter:alpha(opacity=80);}
+.Juser_page span {background-color:#ddd;}
+.Juser_page font {background-color:#FF5E52;}
+.Juser_page a,.Juser_page em {background:#4CAE4C;}
+.Juser_page a:hover {color:#fff;opacity:1;filter:alpha(opacity=100);}
+/**infomation manage**/
+/**pwd manage**/
+
+		
+/**html status**/
+.Juser .Juser_status {width:40%;padding:5px 15px 15px 15px;margin:65px auto;border-style:solid;border-width:1px;border-radius:5px;box-shadow:0 4px 23px 5px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.15);}
+.Juser_status h3 {margin:0 0 15px 0;padding:0;height:30px;line-height:30px;font-size:20px;}
+.Juser_status_text {margin:35px 0 40px 0;padding:0 0 0 40px;font-size:15px;height:32px;line-height:35px;}
+.Juser_status_tips {font-size:13px;color:#999;margin-bottom:0;text-align:right;}
+.Juser_status_success {border-color:#99CC33;background-color:#E9FAC6;}
+.Juser_status_success h3 {color:#99CC33;}
+.Juser_status_success .Juser_status_text{background:url(./s.png) no-repeat 0 0;color:#99CC33;}
+.Juser_status_error {border-color:#FF6666;background-color:#FCEAEA;}
+.Juser_status_error h3 {color:#CC0033;}
+.Juser_status_error .Juser_status_text{background:url(./f.png) no-repeat 0 0;color:#CC0033;}
+

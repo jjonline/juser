@@ -76,19 +76,51 @@ class JuserCommnet {
 		if(empty($this->Options['page'])) {
 			$this->Options['page']   = 1;
 		}
-		$lb                          = ($this->Options['page']-1)*20;
-		$selectSql					 = "SELECT {$this->tableField} FROM `{$this->tableName}` WHERE `mail`='{$mail}' ORDER BY `cid` DESC LIMIT {$lb},20";
-		// var_dump();
-		// echo $selectSql;
+		$lb                          = ($this->Options['page']-1)*10;
+		$selectSql					 = "SELECT {$this->tableField} FROM `{$this->tableName}` WHERE `mail`='{$mail}' ORDER BY `cid` DESC LIMIT {$lb},10";
 		$result =   $this->query($selectSql);
+        if($result) {
+            foreach ($result as $key => $value) {
+                $value['log_url']    = Url::log($value['gid']).'#comment-'.$value['cid'];
+                $articleInfo         = $this->getLogInfo($value['gid']);
+                if($articleInfo) {
+                    #合并文章信息
+                    $value           = array_merge($value,$articleInfo);
+                    $result[$key]    = $value;
+                }else {
+                    #不存在文章 不显示该评论
+                    unset($result[$key]);
+                }
+            }
+        }
 		return $result;
 	}
+    #查询评论对应的文章信息
+    private function getLogInfo($logid) {
+        $sql = "SELECT `gid`,`title`,`comnum`,`date` FROM `".DB_PREFIX."blog` WHERE `gid`={$logid}";
+        $res = $this->Db->query($sql,true);
+        $row = $this->Db->fetch_array($res);
+        if($row) {
+            $logData = array(
+                'log_id' => intval($row['gid']),
+                'log_title' => htmlspecialchars($row['title']),
+                'log_date' => $row['date'] + Option::get('timezone') * 3600,
+                'comnum' => intval($row['comnum']),
+            );
+            return $logData;
+        } else {
+            return false;
+        }
+    }
+
 	#按邮箱查询获得分页按钮情况
 	public function getPageString($mail) {
 		if(!Juser_is_mail($mail)) { return ''; }
 		$rowsCount   =  $this->query("SELECT count(*) AS J_COUNT FROM {$this->tableName} WHERE `mail`='{$mail}'");
 		$rowsCount   =  $rowsCount[0]['J_COUNT'];
-		$TotolRows   =  ceil($rowsCount/20);
+        $nowPage     =  isset($_GET['page']) && ctype_digit((string)$_GET['page']) ?intval($_GET['page']):1;
+		$pageString  =  pagination($rowsCount,10,$nowPage,BLOG_URL.'?plugin=juser&a=UserComment&page=');
+        return $pageString?'<div class="Juser_page">'.$pageString.'<font class="count">共'.$rowsCount.'条</font></div>':$pageString;
 	}
 
 	/**

@@ -12,13 +12,6 @@ class JuserController {
 	public function __construct() {
 		global $CACHE;
 		$this->BlogInfo  =	$CACHE->readCache('options');
-		// $blogname    		=   $BlogInfo['blogname'];
-		// $bloginfo    		= 	$BlogInfo['bloginfo'];
-		// $site_title  		= 	$blogname;
-		// $site_key 	 		= 	$BlogInfo['site_key'];
-		// $site_description   =   $blogname.'用户中心。';
-		// $icp 		 		=   $BlogInfo['icp'];
-		// $footer_info 		=   $BlogInfo['footer_info'];
 	}
 
 	/**
@@ -42,32 +35,49 @@ class JuserController {
 		if(isset($_SESSION['OpenUserInfo']) && !empty($_SESSION['OpenUserInfo'])) {
 			$OpenUserInfo    =   $_SESSION['OpenUserInfo'];
 			$key    		 =   $OpenUserInfo['type'].'_name';
-			$OpenUserTips    =   '<div class="juser_layer_tips"><p class="juser_openlogin_tips"></strong>请注册或<a href="'.$blogUrl.'?plugin=juser&a=login">登录</a>后绑定您的'.$OpenUserInfo['typeName'].'<strong>('.$OpenUserInfo[$key].')</strong></p></div>';
+			$OpenUserTips    =   '<div class="Juser_opentips_container"><p class="Juser_opentips_text"></strong>请注册或<a href="'.$blogUrl.'?plugin=juser&a=login">登录</a>后绑定您的'.$OpenUserInfo['typeName'].'<strong>('.$OpenUserInfo[$key].')</strong></p></div>';
 		}
 		$rightBar = <<<STR
 		{$OpenUserTips}
-		<div class="juser_login juser_register juser_login_left">
+		<div class="Juser_sign_left">
 			<h1>会员注册</h1>
-			<form method="POST" id="juser_register_form" class="juser_form" action="{$blogUrl}?plugin=juser&a=doRegister">
-				<input type="hidden" value="{$this->__Token()}" id="inputToken" name="token">
-				<div class="formFiled"><label for="inputEmail">邮箱</label><input type="text" class="juser_input" placeholder="输入邮箱" id="inputEmail" autocomplete="off" name="u"></div>
-				<div class="formFiled"><label for="inputPwd">密码</label><input type="password" class="juser_input" placeholder="设置您密码" id="inputPwd" name="p"></div>
-				<div class="formFiled"><label for="inputrPwd">重复密码</label><input type="password" class="juser_input" placeholder="将设置的密码重复一遍" id="inputrPwd" name="rp"></div>
-				<div class="formFiled"><label for="inputName">昵称</label><input type="text" class="juser_input" placeholder="设置昵称，可留空" id="inputName" autocomplete="off" name="n"></div>
-				<div class="formFiled"><label for="inputUrl">网址</label><input type="text" class="juser_input" placeholder="博客或空间地址，可留空" id="inputUrl" autocomplete="off" name="url"></div>
-				<div class="formFiled juser_sub"><input type="submit" class="juser_input" id="inputSub" value="立即注册"></div>
-				<div class="formFiled juser_open">
+			<form method="POST" id="Juser_register_form" class="Juser_form" action="{$blogUrl}?plugin=juser&a=doRegister">
+				<input type="hidden" value="{$this->__Token()}" id="Juser_iptToken" name="token">
+				<div class="Juser_ipt">
+					<label for="Juser_iptMail">邮箱</label>
+					<input type="text" class="Juser_input" placeholder="输入邮箱" id="Juser_iptMail" autocomplete="off" name="u">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptPwd">密码</label>
+					<input type="password" class="Juser_input" placeholder="设置您密码" id="Juser_iptPwd" name="p">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptrPwd">重复密码</label>
+					<input type="password" class="Juser_input" placeholder="将设置的密码重复一遍" id="Juser_iptrPwd" name="rp">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptName">昵称</label>
+					<input type="text" class="Juser_input" placeholder="设置昵称，可留空" id="Juser_iptName" autocomplete="off" name="n">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptUrl">网址</label>
+					<input type="text" class="Juser_input" placeholder="博客或空间地址，可留空" id="Juser_iptUrl" autocomplete="off" name="url">
+				</div>
+				<div class="Juser_ipt juser_ipt_sub">
+					<input type="submit" class="Juser_input Juser_Btn" id="Juser_Sub_register" value="立即注册">
+				</div>
+				<div class="Juser_ipt Juser_ipt_open">
 					<span>用其他方式注册：</span>
-					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=qq" class="juser_open_way juser_openqq">QQ</a>
-					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=sina" class="juser_open_way juser_openwb">微博</a>
+					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=qq" class="Juser_ipt_open_Btn Juser_ipt_open_qq">QQ</a>
+					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=sina" class="Juser_ipt_open_Btn Juser_ipt_open_wb">微博</a>
 				</div>
 			</form>
 		</div>
 STR;
 		$leftBar  = <<<STR
-		<div class="juser_login juser_login_right">
+		<div class="Juser_sign_right">
 			<h2>已经是{$this->BlogInfo['blogname']}会员？</h2>
-			<h3><a href="{$blogUrl}?plugin=juser&a=login">立马去登录</a></h3>
+			<h3><a href="{$blogUrl}?plugin=juser&a=login" class="Juser_Btn">立马去登录</a></h3>
 		</div>
 STR;
 		$this->__show($rightBar,$leftBar);
@@ -130,6 +140,12 @@ STR;
 				}else {
 					$this->ajaxReturn(array('code'=>'501','info'=>'服务器异常，注册失败'));
 				}
+			}else {
+				#效验数据失败 可能是邮箱、密码格式问题
+				if(!$RegistData['mail']) {
+					$this->ajaxReturn(array('code'=>'501','info'=>'该邮箱禁止注册'));
+				}
+				$this->ajaxReturn(array('code'=>'501','info'=>'密码格式有误'));
 			}
 		}
 		#非post
@@ -147,33 +163,40 @@ STR;
 		if(isset($_SESSION['OpenUserInfo']) && !empty($_SESSION['OpenUserInfo'])) {
 			$OpenUserInfo    =   $_SESSION['OpenUserInfo'];
 			$key    		 =   $OpenUserInfo['type'].'_name';
-			$OpenUserTips    =   '<div class="juser_layer_tips"><p class="juser_openlogin_tips"></strong>请登录或<a href="'.$blogUrl.'?plugin=juser&a=register">注册</a>后绑定您的'.$OpenUserInfo['typeName'].'<strong>('.$OpenUserInfo[$key].')</strong></p></div>';
+			$OpenUserTips    =   '<div class="Juser_opentips_container"><p class="Juser_opentips_text"></strong>请登录或<a href="'.$blogUrl.'?plugin=juser&a=register">注册</a>后绑定您的'.$OpenUserInfo['typeName'].'<strong>('.$OpenUserInfo[$key].')</strong></p></div>';
 		}
 		$rightBar = <<<STR
 		{$OpenUserTips}
-		<div class="juser_login juser_login_left">
+		<div class="Juser_sign_left Juser_login_left">
 			<h1>会员登录</h1>
-			<form method="POST" id="juser_login_form" class="juser_form" action="{$blogUrl}?plugin=juser&a=doLogin">
-				<input type="hidden" value="{$this->__Token()}" id="inputToken" name="token">
-				<div class="formFiled"><label for="inputEmail">邮箱</label><input type="text" class="juser_input" placeholder="请输入您的邮箱" id="inputEmail" autocomplete="off" name="u"></div>
-				<div class="formFiled"><label for="inputPwd">密码</label><input type="password" class="juser_input" placeholder="请输入您的密码" id="inputPwd" name="p"></div>
-				<div class="formFiled juser_sub"><input type="submit" class="juser_input" id="inputSub" value="登录"></div>
-				<div class="formFiled juser_open">
+			<form method="POST" id="Juser_login_form" class="Juser_form" action="{$blogUrl}?plugin=juser&a=doLogin">
+				<input type="hidden" value="{$this->__Token()}" id="Juser_iptToken" name="token">
+				<div class="Juser_ipt">
+					<label for="Juser_iptMail">邮箱</label>
+						<input type="text" class="Juser_input" placeholder="请输入您的邮箱" id="Juser_iptMail" autocomplete="off" name="u">
+				</div>
+				<div class="Juser_ipt">
+					<label for="Juser_iptPwd">密码</label>
+					<input type="password" class="Juser_input" placeholder="请输入您的密码" id="Juser_iptPwd" name="p">
+				</div>
+				<div class="Juser_ipt juser_ipt_sub">
+					<input type="submit" class="Juser_input Juser_Btn" id="Juser_Sub_login" value="登录">
+				</div>
+				<div class="Juser_ipt Juser_ipt_open">
 					<span>用其他方式登录：</span>
-					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=qq" class="juser_open_way juser_openqq">QQ</a>
-					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=sina" class="juser_open_way juser_openwb">微博</a>
+					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=qq" class="Juser_ipt_open_Btn Juser_ipt_open_qq">QQ</a>
+					<a href="{$blogUrl}?plugin=juser&a=openLogin&type=sina" class="Juser_ipt_open_Btn Juser_ipt_open_wb">微博</a>
 				</div>
 			</form>
 		</div>
 STR;
 		$leftBar  = <<<STR
-		<div class="juser_login juser_login_right">
+		<div class="Juser_sign_right">
 			<h2>还不是{$this->BlogInfo['blogname']}会员？</h2>
-			<h3><a href="{$blogUrl}?plugin=juser&a=register">果断去注册</a></h3>
+			<h3><a href="{$blogUrl}?plugin=juser&a=register" class="Juser_Btn">果断去注册</a></h3>
 		</div>
 STR;
-		$this->__show($rightBar,$leftBar);
-		
+		$this->__show($rightBar,$leftBar);		
 	}
 
 	/**
@@ -276,7 +299,12 @@ STR;
 			emDirect(BLOG_URL.'?plugin=juser');
 		}
 	}
-	#open登录初始化
+
+	/**
+	 * 开放平台登录初始化
+	 * @param null
+	 * @return mixed
+	 */
 	private function openInit() {
 		if(!isset($_GET['type'])) {emDirect(BLOG_URL.'?plugin=juser');}
 		$OpenType 	 = 	 strtolower($_GET['type']);
@@ -293,7 +321,13 @@ STR;
 		$Open  		 =  JuserOpen::getInstance($OpenType,$Key,$Secret,BLOG_URL.'?plugin=juser&a=openCallBack&type='.$OpenType);
 		return $Open;
 	}
-	#open回调并获取用户信息成功后的调度
+
+	/**
+	 * 开放平台登录回调后的判定调度
+	 * @param miexd $isLogin 是否登录的参数[登录情况下该参数将传递用户信息数组]
+	 * @param array $UserInfo 开放平台登录后获取到的开放平台用户信息
+	 * @return mixed
+	 */
 	private function __openLoginHandle($isLogin = null,$UserInfo = array()) {
 		$hasUser = Juser::getUserInfoByOpenID($UserInfo['type'],$UserInfo['_pk']);
 		/*=====================尚未登录=====================*/
@@ -361,10 +395,10 @@ STR;
 	 * @return mixed
 	 */
 	public function UserCenter($UserInfo=null) {
-		$leftBar  			 =	$this->__getLeftBar('UserCenter');
+		$leftBar  			 =	$this->__getAuthLeft('UserCenter');
 		$rightBar = <<<STR
 		<div class="JAuth_right">
-			<div class="JAuth_content">欢迎来到晶晶的博客会员中心，本会员中心功能尚在完善，<a href="http://blog.jjonline.cn/theme/juser.html" target=_blank>点此</a>来给我提意见吧！</div>
+			<div class="JAuth_content">欢迎来到晶晶的博客会员中心，本会员中心功能尚在完善或添加，<a href="http://blog.jjonline.cn/theme/juser.html" target=_blank>[点此]</a>来给我提意见吧！</div>
 		</div>
 STR;
 		$this->__show($leftBar,$rightBar,$UserInfo);
@@ -376,15 +410,28 @@ STR;
 	 * @return mixed
 	 */
 	public function UserComment($UserInfo=null) {
-		$JuserCommentModel   =  new JuserCommnet();
-		$JuserCommentModel->getPageString('jjonline@jjonline.cn');
-		$leftBar  			 =	$this->__getLeftBar('UserComment');
-		$rightBar = <<<STR
-		<div class="JAuth_right">
-			<div class="JAuth_content">JAuth_content</div>
-		</div>
-STR;
-		$this->__show($leftBar,$rightBar,$UserInfo);
+		$page   				=  isset($_GET['page']) && ctype_digit((string)$_GET['page']) ?intval($_GET['page']):1;
+		$JuserCommentModel   	=  new JuserCommnet();
+		$Comment  	 		 	=  $JuserCommentModel->page($page)->select($UserInfo['mail']);
+		$PageString          	=  $JuserCommentModel->getPageString($UserInfo['mail']);
+		$leftBar  			 	=	$this->__getAuthLeft('UserComment');
+		$CommentString       	=  '<div class="JAuth_right">
+										<div class="JAuth_content">
+											<ul class="Juser_comment">';
+		if($Comment) {
+			foreach ($Comment as $key => $value) {
+				$CommentString .= '<li class="Juser_comment_items"><p class="Juser_comment_time">'.date('Y-m-d H:i:s',$value['date']).'</p>';
+				$CommentString .= '<div class="Juser_comment_list"><p class="Juser_comment_text">'.htmlClean($value['comment']).'</p>';
+				$CommentString .= '<p class="Juser_comment_info">评论文章：<a href="'.$value['log_url'].'" target=_blank>《'.$value['log_title'].'》</a> 评论：'.$value['comnum'].'</p>';
+				$CommentString .= '</div></li>';
+			}
+		}else {
+			$CommentString     .=  '<li class="Juser_comment_none">不给力，暂无评论！</li>';
+		}
+		$CommentString         .=  			'</ul>'.$PageString.'
+										</div>
+									</div>';
+		$this->__show($leftBar,$CommentString,$UserInfo);
 	}
 
 	/**
@@ -393,7 +440,7 @@ STR;
 	 * @return mixed
 	 */
 	public function UserInfo($UserInfo=null) {
-		$leftBar  			 =	$this->__getLeftBar('UserInfo');
+		$leftBar  			 =	$this->__getAuthLeft('UserInfo');
 		$rightBar = <<<STR
 		<div class="JAuth_right">
 			<div class="JAuth_content">修改个人资料</div>
@@ -408,7 +455,7 @@ STR;
 	 * @return mixed
 	 */
 	public function UserPassWd($UserInfo=null) {
-		$leftBar  			 =	$this->__getLeftBar('UserPassWd');
+		$leftBar  			 =	$this->__getAuthLeft('UserPassWd');
 		$rightBar = <<<STR
 		<div class="JAuth_right">
 			<div class="JAuth_content">修改账号密码</div>
@@ -416,25 +463,30 @@ STR;
 STR;
 		$this->__show($leftBar,$rightBar,$UserInfo);
 	}
-	#登录状态下侧边栏快速生成
-	private function __getLeftBar($naviName) {
+	
+	/**
+	 * 快速获取登录状态下左侧导航栏html
+	 * @param string $naviName 当前导航名
+	 * @return null
+	 */
+	private function __getAuthLeft($naviName) {
 		$blogUrl  	   =	BLOG_URL;
 		$UserCenter    =	$naviName=='UserCenter'?'items current':'items';
 		$UserComment   =	$naviName=='UserComment'?'items current':'items';
 		$UserInfo 	   =	$naviName=='UserInfo'?'items current':'items';
 		$UserPassWd    =	$naviName=='UserPassWd'?'items current':'items';
 		$leftBar  = <<<STR
-		<div class="JAuth_left">
-			<ul class="Juser_nav">
-				<li class="{$UserCenter}"><a href="{$blogUrl}?plugin=juser&a=UserCenter">会员中心</a></li>
-				<li class="{$UserComment}"><a href="{$blogUrl}?plugin=juser&a=UserComment">评论管理</a></li>
-				<li class="{$UserInfo}"><a href="{$blogUrl}?plugin=juser&a=UserInfo">修改资料</a></li>
-				<li class="{$UserPassWd}"><a href="{$blogUrl}?plugin=juser&a=UserPassWd">修改密码</a></li>
-			</ul>
-			<ul class="Juser_nav">
-				<li class="items signOut"><a href="{$blogUrl}?plugin=juser&a=SignOut">退出</a></li>
-			</ul>
-		</div>
+			<div class="JAuth_left">
+				<ul class="Juser_nav">
+					<li class="{$UserCenter}"><a href="{$blogUrl}?plugin=juser&a=UserCenter">会员中心</a></li>
+					<li class="{$UserComment}"><a href="{$blogUrl}?plugin=juser&a=UserComment">评论管理</a></li>
+					<li class="{$UserInfo}"><a href="{$blogUrl}?plugin=juser&a=UserInfo">修改资料</a></li>
+					<li class="{$UserPassWd}"><a href="{$blogUrl}?plugin=juser&a=UserPassWd">修改密码</a></li>
+				</ul>
+				<ul class="Juser_nav">
+					<li class="items signOut"><a href="{$blogUrl}?plugin=juser&a=SignOut">退出</a></li>
+				</ul>
+			</div>
 STR;
 		return $leftBar;
 	}
@@ -459,27 +511,54 @@ STR;
 	 * @return null
 	 */
 	private function __show($leftString='',$rightString='',$isUserCenter=false) {
-		$class   			=	$isUserCenter?'JAuth':'JnoAuth';
+		$class   			=	$isUserCenter?'Juser_Auth':'Juser_noAuth';
 		$userFigure			=	'';
+		#登录状态下顶部用户头像 mail 开放平台信息展示
 		if($isUserCenter){			
-			$userFigure		=	'<div class="Juser_info"><ul class="Juser_info_ul">';
-			$userFigure    .=   '<li class="Juser_item Juser_item_mail"><img src="'.Juser_getGravatar($isUserCenter['mail']).'"><h2>'.$isUserCenter['mail'].'</h2><p>'.$isUserCenter['name'].'</p></li>';
+			$userFigure		=	'<div class="Juser_figure">
+									<ul class="Juser_figure_ul">';
+			$userFigure    .=   		'<li class="Juser_figure_item Juser_figure_item_mail">
+											<img src="'.Juser_getGravatar($isUserCenter['mail']).'">
+											<h2>'.$isUserCenter['mail'].'</h2>
+											<p>'.$isUserCenter['name'].'</p>
+										</li>';
 			$userFigure     =   empty($isUserCenter['qq_openid'])?
-								$userFigure.'<li class="Juser_item Juser_item_open Juser_item_qq"><img src="'.BLOG_URL.'content/plugins/juser/static/default_qq.jpg"><h2>腾讯QQ <em>未启用</em></h2><p><a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=qq">点击启用QQ登录</a></p></li>':
-								$userFigure.'<li class="Juser_item Juser_item_open Juser_item_qq"><img src="'.$isUserCenter['qq_figure'].'"><h2>腾讯QQ <span>已启用</span></h2><p>'.$isUserCenter['qq_name'].'[<a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=qq">换绑</a>]</p></li>';
+										$userFigure.'
+										<li class="Juser_figure_item Juser_figure_item_open Juser_figure_item_qq">
+											<img src="'.BLOG_URL.'content/plugins/juser/static/default_qq.jpg">
+											<h2>腾讯QQ <em>未启用</em></h2>
+											<p><a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=qq">点击启用QQ登录</a></p>
+										</li>':
+										$userFigure.'
+										<li class="Juser_figure_item Juser_figure_item_open Juser_figure_item_qq">
+											<img src="'.$isUserCenter['qq_figure'].'">
+											<h2>腾讯QQ <span>已启用</span></h2>
+											<p>'.$isUserCenter['qq_name'].'[<a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=qq">换绑</a>]</p>
+										</li>';
 			$userFigure     =   empty($isUserCenter['sina_openid'])?
-								$userFigure.'<li class="Juser_item Juser_item_open Juser_item_wb"><img src="'.BLOG_URL.'content/plugins/juser/static/default_wb.jpg"><h2>新浪微博 <em>未启用</em></h2><p><a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=sina">点击启用微博登录</a></p></li>':
-								$userFigure.'<li class="Juser_item Juser_item_open Juser_item_wb"><img src="'.$isUserCenter['sina_figure'].'"><h2>新浪微博 <span>已启用</span></h2><p>'.$isUserCenter['sina_name'].'[<a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=sina">换绑</a>]</p></li>';
-			$userFigure	   .=	'</ul></div>';
+										$userFigure.'
+										<li class="Juser_figure_item Juser_figure_item_open Juser_figure_item_wb">
+											<img src="'.BLOG_URL.'content/plugins/juser/static/default_wb.jpg">
+											<h2>新浪微博 <em>未启用</em></h2>
+											<p><a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=sina">点击启用微博登录</a></p>
+										</li>':
+										$userFigure.'
+										<li class="Juser_figure_item Juser_figure_item_open Juser_figure_item_wb">
+											<img src="'.$isUserCenter['sina_figure'].'">
+											<h2>新浪微博 <span>已启用</span></h2>
+											<p>'.$isUserCenter['sina_name'].'[<a href="'.BLOG_URL.'?plugin=juser&a=openLogin&type=sina">换绑</a>]</p>
+										</li>';
+			$userFigure	   .=		'</ul>
+								</div>';
 		}
-		echo '<div class="container juser_container" style="position:relative;z-index:9;"><div class="juser_sign_tips juser_sign_success" id="juser_alert">Tips</div></div>';
-		echo '<div class="container juser_container '.$class.'">';
+		echo '<div class="Juser '.$class.' container">';
+		echo '<div class="Juser_tips_container"><div class="Juser_tips Juser_tips_success Juser_tips_error Juser_tips_alert Juser_tips_loading" id="Juser_tips"><p>Tips</p></div></div>';
 		echo    $userFigure;
-		echo 	'<div class="pull">';
-		echo 		'<div class="pull-left Juser_left">';
+		echo 	'<div class="Juser_container">';
+		echo 		'<div class="Juser_left">';
 		echo 			$leftString;
 		echo 		'</div>';
-		echo 		'<div class="pull-right Juser_right">';
+		echo 		'<div class="Juser_right">';
 		echo 			$rightString;
 		echo 		'</div>';
 		echo 	'</div>';
@@ -495,7 +574,15 @@ STR;
 	 */
 	private function __error($tips="错误！",$time=3,$action=null) {
 		$Url = $action?BLOG_URL.'?plugin=juser&a='.$action:BLOG_URL.'?plugin=juser';
-		echo '<div class="container juser_container"><div class="juser_tips juser_tips_error"><h3>操作失败</h3><div class="juser_error"><p class="juser_tips_text">'.$tips.'</p><p class="juser_tips_des">本页面将在<span>'.$time.'</span>秒后自动[<a href="'.$Url.'">跳转</a>]</p></div></div></div>';#具体跳转动作由js完成
+		echo '<div class="Juser container">
+				<div class="Juser_status Juser_status_error">
+					<h3>操作失败</h3>
+					<div class="Juser_status_text">
+						<p class="Juser_status_des">'.$tips.'</p>
+						<p class="Juser_status_tips">本页面将在<span>'.$time.'</span>秒后自动[<a href="'.$Url.'">跳转</a>]</p>
+					</div>
+				</div>
+			</div>';#具体跳转动作由js完成
 	}
 
 	/**
@@ -507,7 +594,15 @@ STR;
 	 */
 	private function __success($tips="成功！",$time=3,$action=null) {
 		$Url = $action?BLOG_URL.'?plugin=juser&a='.$action:BLOG_URL.'?plugin=juser';
-		echo '<div class="container juser_container"><div class="juser_tips juser_tips_success"><h3>操作成功</h3><div class="juser_success"><p class="juser_tips_text">'.$tips.'</p><p class="juser_tips_des">本页面将在<span>'.$time.'</span>秒后自动[<a href="'.$Url.'">跳转</a>]</p></div></div></div>';#具体跳转动作由js完成
+		echo '<div class="Juser container">
+				<div class="Juser_status Juser_status_success">
+					<h3>操作成功</h3>
+					<div class="Juser_status_text">
+						<p class="Juser_status_des">'.$tips.'</p>
+						<p class="Juser_status_tips">本页面将在<span>'.$time.'</span>秒后自动[<a href="'.$Url.'">跳转</a>]</p>
+					</div>
+				</div>
+			</div>';#具体跳转动作由js完成
 	}
 
 	/**
