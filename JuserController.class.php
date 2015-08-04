@@ -572,7 +572,7 @@ STR;
 			#效验原始密码 能执行到此步骤则用户一定存在
 			$isCheck                   =	Juser::checkPassword($_POST['op'],$UserInfo['password']);
 			if($isCheck) {
-				$InputData['password'] =	Juser::genPassword($_POST['op']);
+				$InputData['password'] =	Juser::genPassword($_POST['p']);
 			}else {
 				$this->ajaxReturn(array('code'=>'501','info'=>'效验原密码失败'));
 			}
